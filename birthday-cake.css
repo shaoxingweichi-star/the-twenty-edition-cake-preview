@@ -1,0 +1,140 @@
+/* THE TWENTY EDITION: isolated interactive birthday cake */
+.birthday-cake[hidden], #filmBirthdayCake[hidden] { display: none !important; }
+.birthday-cake {
+  --bc-gold: #d8b57c; --bc-white: #f8efe7; --bc-muted: #b6a89b;
+  position: fixed; inset: 0; z-index: 140; height: 100vh; height: var(--bc-viewport-height, 100dvh);
+  overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; isolation: isolate;
+  background: radial-gradient(ellipse at 50% 46%, #44302f 0%, #241d22 37%, #131319 76%, #101116 100%);
+  color: var(--bc-white); font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+.birthday-cake *, .birthday-cake *::before, .birthday-cake *::after { box-sizing: border-box; }
+.birthday-cake::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 52%, #eecdb21a, transparent 50%);
+}
+.bc-stars { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.bc-star { position: absolute; display: block; width: 2px; height: 2px; border-radius: 50%;
+  background: #ffe8b5; box-shadow: 0 0 9px #f5d39a; opacity: .42; animation: bc-twinkle var(--speed) ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+}
+.bc-celebration { position: fixed; inset: 0; pointer-events: none; z-index: 5; width: 100%; height: 100%; }
+.bc-toolbar { position: absolute; inset: 0 0 auto; z-index: 8; display: flex; align-items: center; justify-content: space-between;
+  padding: calc(14px + env(safe-area-inset-top)) max(23px, env(safe-area-inset-right)) 8px max(23px, env(safe-area-inset-left));
+  font: 10px "DM Mono", ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; color: #d8c6ad;
+}
+.birthday-cake button { font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.birthday-cake button:focus-visible { outline: 2px solid var(--bc-gold); outline-offset: 5px; }
+.bc-close { color: inherit; border: 1px solid #bca68766; background: #1e1a20dd; border-radius: 999px;
+  width: 45px; height: 45px; display: grid; place-items: center; font-size: 21px !important; line-height: 1; }
+.bc-layout { position: relative; z-index: 2; min-height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: calc(75px + env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) calc(36px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+}
+.bc-kicker { font: 10px "DM Mono", monospace; letter-spacing: .27em; color: var(--bc-gold); margin: 0 0 13px; text-transform: uppercase; }
+.bc-heading { font: 400 clamp(28px, 7vw, 49px)/1.15 "Playfair Display", Georgia, serif;
+  letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.bc-subtitle { color: #d4c6bd; font: 13px/1.65 "DM Sans", sans-serif; margin: 12px 0 0; }
+.bc-cake-stage { position: relative; width: min(100%, 470px); height: 340px; height: clamp(300px, 45dvh, 380px);
+  margin: 0 auto -6px; perspective: 900px; flex-shrink: 0; }
+.bc-aura { position: absolute; left: 50%; bottom: 19px; width: 320px; height: 80px; border-radius: 50%;
+  background: #f3b27e2b; filter: blur(35px); transform: translateX(-50%); pointer-events: none; }
+.bc-art-anchor { position: absolute; top: 50%; left: 50%; width: 360px; height: 320px;
+  transform: translate(-50%, -50%); transform-origin: center center; }
+.bc-cake-art { position: relative; width: 360px; height: 320px; transform-style: preserve-3d;
+  animation: bc-breathe 6.5s ease-in-out infinite; }
+.bc-plate { position: absolute; left: 18px; bottom: 13px; width: 324px; height: 52px; z-index: 1;
+  border-radius: 50%; background: linear-gradient(180deg,#ffeccd 0%,#bd986b 42%,#55413d 77%,#2c2830 100%);
+  box-shadow: 0 18px 28px #08080d99, 0 1px 1px #ffe2b7 inset; }
+.bc-plate::before { content: ""; position: absolute; inset: -11px 0 20px; border-radius: 50%;
+  background: radial-gradient(ellipse,#f6dfc7 6%,#d3b490 64%,#aa865f 87%,#f9d8ac 95%); border: 2px solid #ffefcf66; }
+.bc-tier { position: absolute; z-index: 2; border-radius: 9% 9% 44% 44% / 12% 12% 27% 27%;
+  background: linear-gradient(90deg,#9d6973 0%,#e7b3ba 11%,#ffe4df 27%,#f7cfcc 53%,#e5abb6 77%,#a67183 100%);
+  box-shadow: 0 13px 18px #24111888, inset 0 -17px 28px #8f526133, inset 0 8px 10px #fff5e8aa;
+}
+.bc-tier::before { content: ""; position: absolute; left: -1%; width: 102%; height: 46%; top: -21%;
+  border-radius: 50%; background: radial-gradient(ellipse at 43% 30%,#fffbec 6%,#fff3e5 47%,#ffe7d6 68%,#c993a2 100%);
+  box-shadow: inset 0 -7px 9px #f1c0bb, 0 4px 4px #fff1db88; }
+.bc-tier::after { content: ""; position: absolute; bottom: 12px; left: 7%; width: 86%; height: 11px;
+  background: radial-gradient(circle at 7px 5px, #fff9e7 0 5px, transparent 5.5px) repeat-x;
+  background-size: 22px 10px; filter: drop-shadow(0 2px 2px #c57e8d); }
+.bc-tier-lower { left: 30px; bottom: 59px; width: 300px; height: 108px; }
+.bc-tier-upper { left: 70px; bottom: 153px; width: 220px; height: 102px; z-index: 3;
+  background: linear-gradient(90deg,#a06b7b,#e8b6bf 12%,#fff1e4 32%,#fbdcdb 56%,#e4afbb 84%,#a56e7e);
+}
+.bc-frosting { position: absolute; left: 2%; top: 5%; width: 96%; height: 36px; z-index: 2; pointer-events: none;
+  background: radial-gradient(ellipse at 15% 0%,#fff7eb 0 15%,transparent 16%),
+    radial-gradient(ellipse at 38% 0%,#fff7eb 0 17%,transparent 18%),
+    radial-gradient(ellipse at 62% 0%,#fff7eb 0 14%,transparent 15%),
+    radial-gradient(ellipse at 82% 0%,#fff7eb 0 16%,transparent 17%);
+  opacity: .85; }
+.bc-tier-lower .bc-frosting { top: 9%; }
+.bc-ribbon { position: absolute; bottom: 31px; left: 0; right: 0; height: 1px; z-index: 2;
+  background: linear-gradient(90deg,transparent,#f2d5aeaa,transparent); }
+.bc-candles { position: absolute; z-index: 6; bottom: 233px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 19px; align-items: flex-end; height: 105px; }
+.bc-candle { position: relative; font: 700 80px/.95 "Playfair Display", Georgia, serif;
+  color: #f5cb84; letter-spacing: -.08em; text-shadow: 1px 1px 1px #ffe2a1, 3px 4px 0 #9d644e, 8px 8px 14px #2e182080;
+  -webkit-text-stroke: .7px #fff5d6; }
+.bc-candle span.bc-num { display: block; position: relative; z-index: 2; }
+.bc-flame { position: absolute; z-index: 3; top: -23px; left: 48%; width: 16px; height: 25px;
+  border-radius: 5% 70% 48% 70%; transform: translateX(-50%) rotate(40deg) scale(.4);
+  background: radial-gradient(circle at 70% 70%,#fffce8 0%,#fff1a1 27%,#ff9e4a 65%,#f15e38 93%);
+  box-shadow: 0 0 12px 4px #ffc061a6, 0 0 45px 11px #ffaa4b7a; opacity: 0; filter: blur(.3px); pointer-events: none;
+  transition: opacity .36s, transform .36s; }
+.bc-flame::after { content: ""; position: absolute; width: 8px; height: 12px; border-radius: 65% 45% 65% 45%;
+  left: 4px; top: 9px; background: #fff9d8; opacity: .87; }
+.birthday-cake.is-lit .bc-flame { opacity: 1; animation: bc-fire .9s ease-in-out infinite alternate; }
+.birthday-cake.is-lit .bc-candle:nth-child(2) .bc-flame { animation-delay: -.42s; }
+.birthday-cake.is-wished .bc-flame { animation: none; opacity: 0; transform: translateX(-50%) translateY(-12px) rotate(40deg) scale(.3); }
+.bc-smoke { position: absolute; z-index: 4; top: -28px; left: 47%; width: 13px; height: 38px;
+  border-radius: 50%; background: #d4d0c988; filter: blur(8px); opacity: 0; pointer-events: none; }
+.birthday-cake.is-wished .bc-smoke { animation: bc-smoke 1.8s ease-out both; }
+.birthday-cake.is-wished .bc-candle:nth-child(2) .bc-smoke { animation-delay: .25s; }
+.bc-controls { display: flex; flex-direction: column; align-items: center; gap: 14px; z-index: 7; }
+.bc-primary { min-height: 49px; min-width: 218px; border-radius: 999px; border: 1px solid #e9ce9d;
+  color: #24191d; background: linear-gradient(130deg,#fff2d4,#d6b781); font: 500 13px "DM Sans",sans-serif !important;
+  padding: 12px 27px; box-shadow: 0 7px 33px #e4b77f35; transition: transform .22s, box-shadow .22s; }
+@media (hover: hover) { .bc-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 35px #e4b77f55; } }
+.bc-hint { font-size: 11px; line-height: 1.6; color: #b9aaa6; min-height: 18px; margin: 0; }
+.bc-message { margin: 12px auto 0; max-width: 390px; display: grid; gap: 9px;
+  opacity: 0; transform: translateY(12px); transition: opacity 1s, transform 1s; pointer-events: none; }
+.birthday-cake.is-wished .bc-message { opacity: 1; transform: none; transition-delay: .55s; }
+.bc-message h3 { margin: 0; font: 400 clamp(24px, 5.5vw, 34px)/1.3 "Playfair Display", "Songti SC", serif; color: #f4dfb6; }
+.bc-message p { margin: 0; font: 14px/1.9 "Songti SC","PingFang SC",serif; color: #e3d7cf; }
+.bc-footer { margin-top: 22px; color: #a38e83; font: 9px "DM Mono",monospace; letter-spacing: .23em; }
+.birthday-cake.is-wished .bc-aura { background: #d5a87240; }
+.ef-actions.bc-has-cake { flex-wrap: wrap; gap: 16px 28px; width: min(100%, 640px); }
+.bc-open-film { max-width: 100%; }
+@keyframes bc-twinkle { to { opacity: .9; transform: scale(1.6); } }
+@keyframes bc-breathe { 0%,100% { transform: translateY(0) rotateY(-5deg) rotateZ(-.4deg); } 50% { transform: translateY(-8px) rotateY(7deg) rotateZ(.4deg); } }
+@keyframes bc-fire { from { transform: translateX(-50%) rotate(32deg) scale(.85); filter: blur(.4px); }
+ to { transform: translateX(-50%) translateY(-4px) rotate(48deg) scale(1.08,.87); filter: blur(.7px); } }
+@keyframes bc-smoke { 0% { opacity: .5; transform: translateY(0) scale(.65); } 60% { opacity: .33; }
+ 100% { opacity: 0; transform: translate(12px,-64px) scale(2); } }
+@media(max-width:460px) {
+  .bc-art-anchor { transform: translate(-50%,-50%) scale(.82); }
+  .bc-cake-stage { height: 300px; height: clamp(255px, 38dvh, 340px); }
+  .bc-kicker { margin-bottom: 10px; }
+  .bc-subtitle { margin-top: 8px; }
+  .bc-heading { font-size: clamp(25px,7vw,37px); }
+  .bc-layout { padding-top: calc(80px + env(safe-area-inset-top)); }
+  .ef-actions .bc-open-film { flex-basis: 100%; }
+}
+@media(max-height:720px) {
+  .bc-layout { justify-content: flex-start; }
+  .bc-cake-stage { height: 275px; }
+  .bc-footer { margin-top: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .birthday-cake *, .birthday-cake *::before, .birthday-cake *::after { animation: none !important; transition: none !important; }
+  .birthday-cake.is-lit .bc-flame { opacity: 1; transform: translateX(-50%) rotate(40deg) scale(.94); }
+  .birthday-cake.is-wished .bc-flame { opacity: 0; }
+  .birthday-cake.is-wished .bc-message { opacity: 1; transform: none; }
+}
+
+/* Leave room for the wish and its message on shorter iPhone viewports. */
+@media (max-width: 460px) and (max-height: 850px) {
+  .bc-cake-stage { height: 265px; }
+}
+.birthday-cake.bc-paused * { animation-play-state: paused !important; }

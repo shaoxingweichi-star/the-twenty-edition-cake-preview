@@ -1,0 +1,23 @@
+/* Small state override: show only the introduction before it is opened. */
+.is-locked main { visibility: visible; }
+.is-locked .section { visibility: hidden; }
+
+/* Author display rules must not override semantic hidden states. */
+[hidden] { display: none !important; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.access-gate { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 8vw; background: var(--ink); color: var(--paper); text-align: center; }
+.access-gate-inner { width: min(100%, 560px); }
+.access-gate .eyebrow { margin-bottom: 2rem; color: #c7bbab; }
+.access-kicker { margin: 0 0 1.2rem; font: 10px var(--mono); letter-spacing: .15em; }
+.access-gate h1 { margin: 0; font: 400 clamp(3.6rem, 10vw, 7.5rem)/.84 var(--serif); letter-spacing: -.07em; }
+.access-gate h1 em { font-weight: 400; }
+.access-copy { margin: 2rem 0; font: italic 1.15rem var(--serif); }
+.access-form { display: flex; justify-content: center; gap: 10px; }
+.access-form input { width: 140px; border: 0; border-bottom: 1px solid rgba(242,238,229,.65); border-radius: 0; outline: none; background: transparent; color: var(--paper); font: 18px var(--mono); letter-spacing: .35em; text-align: center; }
+.access-form input:focus { border-color: var(--paper); }
+.access-status { height: 1.5em; margin: 1.25rem 0 0; color: #c7bbab; font: 10px var(--mono); letter-spacing: .08em; }
+.access-index { position: absolute; bottom: 5vh; margin: 0; font: 10px var(--mono); letter-spacing: .08em; }
+body.is-gated { overflow: hidden; }
+.music-resume { position: fixed; z-index: 110; right: max(20px, env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); border: 1px solid #b99a63; background: #171613; color: #F2EEE5; padding: 12px 18px; min-height: 44px; font: 12px "DM Sans", "PingFang SC", sans-serif; cursor: pointer; }
+@media (max-width: 500px) { .access-form { align-items: center; flex-direction: column; } .access-form input { height: 48px; } }

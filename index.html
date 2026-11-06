@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="THE TWENTY EDITION — a birthday edition for Jin Qi." />
+    <meta name="theme-color" content="#171613" />
+    <title>THE TWENTY EDITION</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Playfair+Display:ital,wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="fixes.css" />
+    <link rel="stylesheet" href="edition-film.css" />
+    <link rel="stylesheet" href="birthday-cake.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <section class="access-gate" id="accessGate" aria-labelledby="accessTitle">
+      <div class="access-gate-inner">
+        <p class="eyebrow">Private edition / 11.20</p>
+        <p class="access-kicker">FOR JIN QI</p>
+        <h1 id="accessTitle">ENTER<br /><em>THE EDITION.</em></h1>
+        <p class="access-copy">A small key for a special day.</p>
+        <form id="accessForm" class="access-form">
+          <label class="sr-only" for="accessCode">Four-digit access code</label>
+          <input id="accessCode" inputmode="numeric" autocomplete="off" pattern="[0-9]{4}" maxlength="4" placeholder="• • • •" aria-describedby="accessStatus" required />
+          <button class="button button-light" type="submit">Enter <span aria-hidden="true">↘</span></button>
+        </form>
+        <p class="access-status" id="accessStatus" aria-live="polite"></p>
+      </div>
+      <p class="access-index">THE TWENTY EDITION / 11.20</p>
+    </section>
+    <div id="site" class="site is-locked">
+      <header class="topbar" aria-label="Site navigation">
+        <a href="#cover" class="wordmark" aria-label="The Twenty Edition home">THE / TWENTY</a>
+        <nav class="nav-links" aria-label="Sections">
+          <a href="#cover">Cover</a><a href="#portraits">Portraits</a><a href="#note">Note</a><a href="#wishes">Wishes</a>
+        </nav>
+        <button class="sound-button" id="soundToggle" type="button" aria-pressed="false" aria-label="Play background music" hidden>
+          <span class="sound-mark" aria-hidden="true"></span><span id="soundLabel">Sound off</span>
+        </button>
+      </header>
+
+      <main>
+        <section class="intro" id="intro" aria-label="Introduction">
+          <p class="eyebrow reveal">An edition of her own.</p>
+          <h1 class="intro-title reveal">THE TWENTY<br />EDITION</h1>
+          <p class="intro-caption reveal">A special chapter begins.</p>
+          <button id="openEdition" class="button button-light reveal" type="button">Open your edition <span aria-hidden="true">↘</span></button>
+          <p class="intro-count reveal" aria-hidden="true">20 / 01</p>
+        </section>
+
+        <section class="cover section" id="cover" aria-labelledby="cover-title">
+          <div class="cover-image image-frame"><img id="coverImage" alt="" /></div>
+          <div class="cover-copy">
+            <p class="eyebrow" id="coverDate">Birthday edition / November 20</p>
+            <h2 id="cover-title">THE<br />TWENTY<br />EDITION</h2>
+            <div class="cover-footer"><p id="coverName">JIN QI</p><p id="coverBirthday">HAPPY 20TH BIRTHDAY</p></div>
+          </div>
+          <p class="cover-side">A portrait of a new beginning</p>
+        </section>
+
+        <section class="portraits section" id="portraits" aria-labelledby="portraits-title">
+          <div class="section-heading"><p class="eyebrow">02 / Portraits</p><h2 id="portraits-title">IN HER<br /><em>OWN LIGHT.</em></h2></div>
+          <div class="portrait-grid" id="portraitGrid" aria-live="polite"></div>
+          <p class="section-note">A collection of moments, held close.</p>
+        </section>
+
+        <section class="note section" id="note" aria-labelledby="note-title">
+          <p class="vertical-label">03 / A note</p>
+          <div class="note-content"><p class="eyebrow">A note for you</p><h2 id="note-title">For the next<br /><em>beautiful page.</em></h2><div id="noteText" class="note-text"></div><p class="signature" id="noteSignature">— With warm wishes</p></div>
+        </section>
+
+        <section class="wishes section" id="wishes" aria-labelledby="wishes-title">
+          <div class="section-heading"><p class="eyebrow">04 / Three wishes</p><h2 id="wishes-title">FOR ALL THAT<br /><em>IS TO COME.</em></h2></div>
+          <div class="wish-list" id="wishList"></div>
+        </section>
+
+        <section class="finale section" id="finale" aria-labelledby="finale-title">
+          <div class="finale-star" aria-hidden="true">✦</div>
+          <p class="eyebrow">The finale</p>
+          <h2 id="finale-title">AND THIS IS JUST<br /><em>THE BEGINNING.</em></h2>
+          <p class="finale-birthday" id="finaleBirthday">HAPPY 20TH BIRTHDAY, JIN QI.</p>
+          <p class="finale-made">MADE ESPECIALLY FOR YOU.</p>
+          <button id="surpriseButton" class="text-button" type="button">One more thing <span aria-hidden="true">+</span></button>
+          <p class="finale-index">THE TWENTY EDITION / 2026</p>
+        </section>
+      </main>
+    </div>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+      <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close photo viewer">×</button>
+      <button class="lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous photo">←</button>
+      <figure><img id="lightboxImage" alt="" /><figcaption id="lightboxCaption"></figcaption></figure>
+      <button class="lightbox-next" id="lightboxNext" type="button" aria-label="Next photo">→</button>
+    </div>
+    <div id="editionFilm" class="edition-film" role="dialog" aria-modal="true" aria-labelledby="filmTitle" hidden tabindex="-1">
+      <div class="ef-toolbar">
+        <button id="filmSound" type="button" aria-pressed="false">开启声音</button>
+        <button id="filmSkip" type="button">跳过动画</button>
+        <button id="filmClose" type="button" aria-label="关闭彩蛋，返回杂志">关闭 ×</button>
+      </div>
+      <div class="ef-stage ef-opening" data-scene="opening" aria-hidden="true"><span class="ef-line"></span><span class="ef-number"></span><p id="filmMoment"></p></div>
+      <div class="ef-stage ef-portraits" data-scene="portraits" aria-hidden="true"><div class="ef-images" id="filmImages"></div><div class="ef-photo-copy"><h2 id="filmChapter"></h2><p id="filmStory"></p></div></div>
+      <div class="ef-stage ef-note" data-scene="note" aria-hidden="true"><span class="ef-note-index">A NOTE / CHAPTER 20</span><div id="filmLines"></div></div>
+      <div class="ef-stage ef-ending" data-scene="ending" aria-hidden="true">
+        <div class="ef-stars" aria-hidden="true">✧<span>·</span><i>✦</i></div>
+        <span class="ef-number"></span><h2 id="filmTitle" tabindex="-1"></h2><p class="ef-blessing" id="filmBlessing"></p><p class="ef-promise" id="filmPromise"></p><p class="ef-date" id="filmDate"></p><p class="ef-dedication" id="filmDedication"></p>
+        <div class="ef-actions"><button id="filmReplay" type="button">重看一次 <span aria-hidden="true">↺</span></button><button id="filmReturn" type="button">返回杂志 <span aria-hidden="true">↗</span></button></div>
+      </div>
+      <p id="filmStatus" class="sr-only" aria-live="polite"></p>
+    </div>
+    <audio id="backgroundMusic" preload="none"></audio>
+    <script src="config.js"></script>
+    <script src="edition-sound.js"></script>
+    <script src="app.js"></script>
+    <script src="edition-film.js"></script>
+    <script src="birthday-cake.js"></script>
+  </body>
+</html>
